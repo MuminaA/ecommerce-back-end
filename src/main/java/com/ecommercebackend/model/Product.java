@@ -21,6 +21,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
     private String name;
     private String description;
     private String size;
@@ -37,12 +40,13 @@ public class Product {
 
     public Product() {}
 
-    public Product(Long id, String name, String description, String size, BigDecimal price, String imageUrl, String category, Integer stockQuantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(Long id, Boolean isDeleted, String name, String description, String size, BigDecimal price, String imageUrl, String category, Integer stockQuantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.isDeleted = false;
         this.name = name;
         this.description = description;
-        this.price = price;
         this.size = size;
+        this.price = price;
         this.imageUrl = imageUrl;
         this.category = category;
         this.stockQuantity = stockQuantity;
@@ -56,6 +60,14 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public String getName() {
@@ -134,11 +146,11 @@ public class Product {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(size, product.size) && Objects.equals(price, product.price) && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(category, product.category) && Objects.equals(stockQuantity, product.stockQuantity) && Objects.equals(createdAt, product.createdAt) && Objects.equals(updatedAt, product.updatedAt);
+        return Objects.equals(id, product.id) && Objects.equals(isDeleted, product.isDeleted) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(size, product.size) && Objects.equals(price, product.price) && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(category, product.category) && Objects.equals(stockQuantity, product.stockQuantity) && Objects.equals(createdAt, product.createdAt) && Objects.equals(updatedAt, product.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, size, price, imageUrl, category, stockQuantity, createdAt, updatedAt);
+        return Objects.hash(id, isDeleted, name, description, size, price, imageUrl, category, stockQuantity, createdAt, updatedAt);
     }
 }

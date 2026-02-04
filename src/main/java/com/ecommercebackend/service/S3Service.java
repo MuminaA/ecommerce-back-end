@@ -1,10 +1,12 @@
 package com.ecommercebackend.service;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -60,6 +63,25 @@ public class S3Service {
 
         // Return the public URL
         return s3Client.getUrl(bucketName, fileName).toString();
+    }
+
+    public String generatePresignedUrlWithKey(String key, String fileType) {
+        Date expiration = new Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 60;
+        expiration.setTime(expTimeMillis);
+
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                new GeneratePresignedUrlRequest(bucketName, key)
+                        .withMethod(HttpMethod.PUT)
+                        .withContentType(fileType)
+                        .withExpiration(expiration);
+
+        return s3Client.generatePresignedUrl(generatePresignedUrlRequest).toString();
+    }
+
+    public String getFileUrlWithKey(String key) {
+        return s3Client.getUrl(bucketName, key).toString();
     }
 
     public void deleteFile(String fileUrl) {

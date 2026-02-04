@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -60,9 +60,9 @@ public class ProductController {
     }
 
     // GET products by category (optional)
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String category) {
-        List<Product> products = productService.getProductsByCategory(category);
-        return ResponseEntity.ok(products);
-    }
+    //    @GetMapping("/category/{category}")
+    //    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String category) {
+    //        List<Product> products = productService.getProductsByCategory(category);
+    //        return ResponseEntity.ok(products);
+    //    }
 }

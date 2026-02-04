@@ -1,0 +1,1 @@
+web: java -jar target/ecommerce-back-end-0.0.1-SNAPSHOT.jar

@@ -34,3 +34,8 @@ build/
 
 ### APPLICATION PROPERTIES - NEVER COMMIT THIS! ###
 src/main/resources/application.properties
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

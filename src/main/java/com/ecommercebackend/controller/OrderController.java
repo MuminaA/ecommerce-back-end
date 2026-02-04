@@ -7,13 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/orders")
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "http://localhost:5173")
 public class OrderController {
 
     @Autowired
@@ -24,10 +23,26 @@ public class OrderController {
     // Create new order (customer checkout)
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        System.out.println("=====================================");
+        System.out.println("=== CREATE ORDER CALLED ===");
+        System.out.println("Customer: " + order.getCustomerName());
+        System.out.println("Email: " + order.getCustomerEmail());
+        System.out.println("Items: " + (order.getOrderItems() != null ? order.getOrderItems() : "NULL"));
+
         try {
+            if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
+                System.out.println("❌ ERROR: Order has no items");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+
             Order createdOrder = orderService.createOrder(order);
+            System.out.println("✅ SUCCESS! Order created: " + createdOrder.getId());
+            System.out.println("=====================================");
             return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (Exception e) {
+            System.out.println("❌ ERROR:");
+            e.printStackTrace();
+            System.out.println("=====================================");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

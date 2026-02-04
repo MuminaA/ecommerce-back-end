@@ -46,11 +46,14 @@ public class ProductService {
 
     // Delete product
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        product.setIsDeleted(true);
+        productRepository.save(product);
     }
 
     // Get products by category (optional)
-    public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategory(category);
-    }
+    //    public List<Product> getProductsByCategory(String category) {
+    //        return productRepository.findByCategory(category);
+    //    }
 }
