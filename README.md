@@ -26,4 +26,4 @@ Spring Boot backend for an e-commerce application. Provides REST APIs for produc
 	- `aws.secret.access.key=YOUR_SECRET_KEY`
 4. From the project root, run the app:
 	- `./mvnw spring-boot:run`
-5. The API will be available at http://localhost:5000 (or the `server.port` you configure).
+5. The API will be available at http://localhost:5000 (or the `server.port` you configure). 
